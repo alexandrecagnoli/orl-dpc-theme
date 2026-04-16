@@ -1,0 +1,3 @@
+<?php
+$PAYCHECK_AMOUNT=315;
+?>
