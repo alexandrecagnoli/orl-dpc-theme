@@ -152,12 +152,36 @@ function action_customer_update()
 					        	$mySession->deleteCustomer_eval_1_startdate($customerId);
 					        	$mySession->deleteCustomer_eval_1_enddate($customerId);
 								$mySession->setCustomer_eval_1_status($customerId, 0);
+								$forms_to_clear = [];
+								if(in_array($mySession->evaluation_type, ['app', 'app+epp']) && !empty($mySession->app_form['id']))
+									$forms_to_clear[] = $mySession->app_form['id'];
+								if(in_array($mySession->evaluation_type, ['epp', 'app+epp']) && !empty($mySession->epp_form['id']))
+									$forms_to_clear[] = $mySession->epp_form['id'];
+								foreach($forms_to_clear as $form_id) {
+									$quiz = new Quiz($form_id);
+									foreach($quiz->getFormEntries() as $entry) {
+										if($entry['created_by'] == $customerId && $entry[5] == $mySession->id && $entry[8] == 1)
+											GFAPI::delete_entry($entry['id']);
+									}
+								}
 					        }
 					        if($update_action == 21)
 					        {
 					        	$mySession->deleteCustomer_eval_2_startdate($customerId);
 					        	$mySession->deleteCustomer_eval_2_enddate($customerId);
 								$mySession->setCustomer_eval_2_status($customerId, 0);
+								$forms_to_clear = [];
+								if(in_array($mySession->evaluation_type, ['app', 'app+epp']) && !empty($mySession->app_form['id']))
+									$forms_to_clear[] = $mySession->app_form['id'];
+								if(in_array($mySession->evaluation_type, ['epp', 'app+epp']) && !empty($mySession->epp_form['id']))
+									$forms_to_clear[] = $mySession->epp_form['id'];
+								foreach($forms_to_clear as $form_id) {
+									$quiz = new Quiz($form_id);
+									foreach($quiz->getFormEntries() as $entry) {
+										if($entry['created_by'] == $customerId && $entry[5] == $mySession->id && $entry[8] == 2)
+											GFAPI::delete_entry($entry['id']);
+									}
+								}
 					        }
 					        ///////////////////
 					        //
