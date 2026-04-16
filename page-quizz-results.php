@@ -137,14 +137,20 @@ $search_criteria = array( 'status' => 'active' );
                        
                         foreach($entries as $entry){
                             $entry_customer_id = $entry['created_by'];
-                            $step_match = ($eval_type == "epp") ? true : ($entry[8] == $eval_step);
-                            if ( ($entry[$id] == $value )
-                            && (!in_array($entry_customer_id, $entries_tab, true))
-                            && $step_match
-                            && ($entry[5] == $post_id ))
-                            {
-                                $cpt++;
-                                array_push($entries_tab, $entry_customer_id);
+                            if ($eval_type == "epp") {
+                                // EPP : chaque user soumet epp_number fois, on compte toutes les soumissions
+                                if ( ($entry[$id] == $value) && ($entry[8] == $eval_step) && ($entry[5] == $post_id) ) {
+                                    $cpt++;
+                                }
+                            } else {
+                                if ( ($entry[$id] == $value )
+                                && (!in_array($entry_customer_id, $entries_tab, true))
+                                && ($entry[8] == $eval_step)
+                                && ($entry[5] == $post_id ))
+                                {
+                                    $cpt++;
+                                    array_push($entries_tab, $entry_customer_id);
+                                }
                             }
                         }
                         $percentage = ($cpt * 100) / count($entries) ;
@@ -185,14 +191,20 @@ $search_criteria = array( 'status' => 'active' );
                            
                             $entry_customer_id = $entry['created_by'];
 
-                            $step_match = ($eval_type == "epp") ? true : ($entry[8] == $eval_step);
-                            if ( ($entry[$answer['id']] != "")
-                            && (!in_array($entry_customer_id, $entries_tab, true))
-                            && $step_match
-                            && ($entry[5] == $post_id ))
-                            {
-                                $cpt++;
-                                array_push($entries_tab, $entry_customer_id);
+                            if ($eval_type == "epp") {
+                                // EPP : chaque user soumet epp_number fois, on compte toutes les soumissions
+                                if ( ($entry[$answer['id']] != "") && ($entry[8] == $eval_step) && ($entry[5] == $post_id) ) {
+                                    $cpt++;
+                                }
+                            } else {
+                                if ( ($entry[$answer['id']] != "")
+                                && (!in_array($entry_customer_id, $entries_tab, true))
+                                && ($entry[8] == $eval_step)
+                                && ($entry[5] == $post_id ))
+                                {
+                                    $cpt++;
+                                    array_push($entries_tab, $entry_customer_id);
+                                }
                             }
                         }
                         
