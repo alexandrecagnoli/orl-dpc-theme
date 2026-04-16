@@ -5,9 +5,8 @@
                     'post_type' => 'session',
                     'meta_key'          => 'session_startdate',
                     'orderby'           => 'meta_value',
-                    'meta_key'          => 'session_customers',
                     'posts_per_page' => 10,
-                    'order' => 'ASC',
+                    'order' => 'DESC',
 					'meta_query'	=> array(
 							'relation'		=> 'AND',
 							array(
