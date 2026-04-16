@@ -71,14 +71,12 @@
                         $app_count = $app->countUserFormEntries($customerId, 1, $mySession->id);
                         $epp_count = $epp->countUserFormEntries($customerId, 1, $mySession->id);
                         echo getStatusIcon($mySession->getCustomer_eval_1_status($customerId), "App : ".$app_count." - Epp : ".$epp_count."/".$epp_max);
-                    }
-                    if($mySession->evaluation_type == "epp"){
+                    } elseif($mySession->evaluation_type == "epp"){
                         $epp = new Quiz($mySession->epp_form['id']);
                         $epp_count = $epp->countUserFormEntries($customerId, 1, $mySession->id);
                         $epp_max = $mySession->epp_number;
                         echo getStatusIcon($mySession->getCustomer_eval_1_status($customerId), "Epp : ".$epp_count."/".$epp_max);
-                    }
-                    else{
+                    } else {
                         echo getStatusIcon($mySession->getCustomer_eval_1_status($customerId), getStatusNiceName($mySession->getCustomer_eval_1_status($customerId)));
                     }                    
                     echo "</td>";
@@ -99,15 +97,13 @@
                         $app_count = $app->countUserFormEntries($customerId, 2, $mySession->id);
                         $epp_count = $epp->countUserFormEntries($customerId, 2, $mySession->id);
                         echo getStatusIcon($mySession->getCustomer_eval_2_status($customerId), "App : ".$app_count." - Epp : ".$epp_count."/".$epp_max);
-                    }
-                    if($mySession->evaluation_type == "epp"){
+                    } elseif($mySession->evaluation_type == "epp"){
                         $epp = new Quiz($mySession->epp_form['id']);
                         $epp_count = $epp->countUserFormEntries($customerId, 2, $mySession->id);
                         $epp_max = $mySession->epp_number;
                         echo getStatusIcon($mySession->getCustomer_eval_2_status($customerId), "Epp : ".$epp_count."/".$epp_max);
-                    }
-                    else{
-                        echo getStatusIcon($mySession->getCustomer_eval_2_status($customerId), getStatusNiceName($mySession->getCustomer_eval_1_status($customerId)));
+                    } else {
+                        echo getStatusIcon($mySession->getCustomer_eval_2_status($customerId), getStatusNiceName($mySession->getCustomer_eval_2_status($customerId)));
                     }  
                     echo "</td>";
                     echo "<td>";
