@@ -6,7 +6,7 @@
 
 <?php wp_head(); 
 $start = microtime(true);
-$paging = array( 'offset' => 0, 'page_size' => 0 );
+$paging = array( 'offset' => 0, 'page_size' => 500 );
 $search_criteria = array( 'status' => 'active' );
 ?>
 <main class="container page-form">
@@ -138,7 +138,7 @@ $search_criteria = array( 'status' => 'active' );
                        
                         foreach($entries as $entry){
                             $entry_customer_id = $entry['created_by'];
-                            if( ($eval_type == "epp") && ($entry[$answer['id']] != "")  && ($entry[8] == $eval_step) ){
+                            if( ($eval_type == "epp") && ($entry[$id] != "")  && ($entry[8] == $eval_step) ){
                                 $cpt++;
                                 array_push($entries_tab, $entry_customer_id);
                             }

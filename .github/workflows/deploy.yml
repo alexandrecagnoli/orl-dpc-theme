@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        run: |
+          rsync -rtvz --delete \
+            --no-perms --no-times \
+            --exclude='.DS_Store' \
+            --exclude='.git' \
+            --exclude='.github' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            ./ \
+            "orl-dpc.fr_frbtdy9e4fp@217.160.212.149:/var/www/vhosts/orl-dpc.fr/httpdocs/wp-content/themes/orl-dpc V2/"

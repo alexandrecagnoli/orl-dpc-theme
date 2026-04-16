@@ -11,11 +11,6 @@ add_filter('date_i18n', function ($date, $format, $timestamp, $gmt) {
 if( function_exists('acf_add_options_page') ) {
     acf_add_options_page();
 }
-function my_acf_init() {
-
-    acf_update_setting('google_api_key', 'AIzaSyB4NZg1Tr0N1CRCRH4H8MEDAoeu3-0zTX8');
-}
-add_action('acf/init', 'my_acf_init');
 
 // Remove admin bar for subscribers
 add_action('after_setup_theme', 'remove_admin_bar');
