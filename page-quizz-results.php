@@ -138,14 +138,10 @@ $search_criteria = array( 'status' => 'active' );
                        
                         foreach($entries as $entry){
                             $entry_customer_id = $entry['created_by'];
-                            if( ($eval_type == "epp") && ($entry[$id] != "")  && ($entry[8] == $eval_step) ){
-                                $cpt++;
-                                array_push($entries_tab, $entry_customer_id);
-                            }
-                            elseif ( ($entry[$id] == $value ) 
-                            && (!in_array($entry_customer_id, $entries_tab, true)) 
-                            && ($entry[8] == $eval_step) 
-                            && ($entry[5] == $post_id )) 
+                            if ( ($entry[$id] == $value )
+                            && (!in_array($entry_customer_id, $entries_tab, true))
+                            && ($entry[8] == $eval_step)
+                            && ($entry[5] == $post_id ))
                             {
                                 $cpt++;
                                 array_push($entries_tab, $entry_customer_id);
