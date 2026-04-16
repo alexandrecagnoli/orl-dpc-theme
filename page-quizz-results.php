@@ -95,7 +95,6 @@ $search_criteria = array( 'status' => 'active' );
     $entries = GFAPI::get_entries( $quiz_id, $search_criteria, null, $paging );
 
     echo count($entries)." réponses";
-    if(!empty($entries)) echo "<pre>DEBUG entry[0]: field5=".($entries[0][5] ?? 'vide')." | field8=".($entries[0][8] ?? 'vide')." | post_id=$post_id | eval_step=$eval_step</pre>";
     
     // on parse les questions
     foreach ($form as $value) {
@@ -138,9 +137,10 @@ $search_criteria = array( 'status' => 'active' );
                        
                         foreach($entries as $entry){
                             $entry_customer_id = $entry['created_by'];
+                            $step_match = ($eval_type == "epp") ? true : ($entry[8] == $eval_step);
                             if ( ($entry[$id] == $value )
                             && (!in_array($entry_customer_id, $entries_tab, true))
-                            && ($entry[8] == $eval_step)
+                            && $step_match
                             && ($entry[5] == $post_id ))
                             {
                                 $cpt++;
@@ -185,21 +185,14 @@ $search_criteria = array( 'status' => 'active' );
                            
                             $entry_customer_id = $entry['created_by'];
 
-                            if( ($eval_type == "epp") 
-                            && ($entry[$answer['id']] != "")  
-                            && ($entry[8] == $eval_step) 
-                            && ($entry[5] == $post_id ) ){
-                                $cpt++;
-                                array_push($entries_tab, $entry_customer_id);
-                            }
-
-                            elseif ( ($entry[$answer['id']] != "") 
-                            && (!in_array($entry_customer_id, $entries_tab, true)) 
-                            && ($entry[8] == $eval_step)        )   
+                            $step_match = ($eval_type == "epp") ? true : ($entry[8] == $eval_step);
+                            if ( ($entry[$answer['id']] != "")
+                            && (!in_array($entry_customer_id, $entries_tab, true))
+                            && $step_match
+                            && ($entry[5] == $post_id ))
                             {
                                 $cpt++;
                                 array_push($entries_tab, $entry_customer_id);
-                               
                             }
                         }
                         
