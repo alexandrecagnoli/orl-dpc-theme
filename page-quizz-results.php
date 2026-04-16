@@ -94,8 +94,8 @@ $search_criteria = array( 'status' => 'active' );
     // objet réponses
     $entries = GFAPI::get_entries( $quiz_id, $search_criteria, null, $paging );
 
-    // echo "<pre>".var_export($entries, true)."</pre>";
     echo count($entries)." réponses";
+    if(!empty($entries)) echo "<pre>DEBUG entry[0]: field5=".($entries[0][5] ?? 'vide')." | field8=".($entries[0][8] ?? 'vide')." | post_id=$post_id | eval_step=$eval_step</pre>";
     
     // on parse les questions
     foreach ($form as $value) {
